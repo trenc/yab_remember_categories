@@ -57,9 +57,6 @@ function yab_remember_categories()
 	$js        = <<<EOF
 <script>
 (function() {
-console.log('sdf');
-console.log('$event');
-console.log('$step');
 	var cat1 = localStorage.getItem('category-1');
 	var cat2 = localStorage.getItem('category-2');
 	$('option[value="' + cat1 + '"]', '#category-1').prop('selected', true);
