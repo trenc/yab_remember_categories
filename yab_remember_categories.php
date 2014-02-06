@@ -2,7 +2,7 @@
 
 $plugin['name'] = 'yab_remember_categories';
 $plugin['allow_html_help'] = 0;
-$plugin['version'] = '0.1';
+$plugin['version'] = '0.2';
 $plugin['author'] = 'Tommy Schmucker';
 $plugin['author_uri'] = 'http://www.yablo.de/';
 $plugin['description'] = 'Remembers the selected categories in write tab.';
@@ -20,6 +20,22 @@ if (!defined('txpinterface'))
 }
 
 # --- BEGIN PLUGIN CODE ---
+/**
+ * yab_remember_categories
+ *
+ * A Textpattern CMS plugin.
+ * Remembers the selected categories in write tab
+ *
+ * @author Tommy Schmucker
+ * @link   http://www.yablo.de/
+ * @link   http://tommyschmucker.de/
+ * @date   2014-02-06
+ *
+ * This plugin is released under the GNU General Public License Version 2 and above
+ * Version 2: http://www.gnu.org/licenses/gpl-2.0.html
+ * Version 3: http://www.gnu.org/licenses/gpl-3.0.html
+ */
+
 if (@txpinterface == 'admin')
 {
 	register_callback(
@@ -29,18 +45,21 @@ if (@txpinterface == 'admin')
 	);
 }
 
+/**
+ * Echo the plugin JavaScript on article write tab, when article is created.
+ *
+ * @return void Echos the JavaScript
+ */
 function yab_remember_categories()
 {
-	global $event;
-
-	if ($event != 'article')
-	{
-		return false;
-	}
+	global $event, $step;
 
 	$js        = <<<EOF
 <script>
 (function() {
+console.log('sdf');
+console.log('$event');
+console.log('$step');
 	var cat1 = localStorage.getItem('category-1');
 	var cat2 = localStorage.getItem('category-2');
 	$('option[value="' + cat1 + '"]', '#category-1').prop('selected', true);
@@ -54,7 +73,11 @@ function yab_remember_categories()
 </script>
 EOF;
 
-	echo $js;
+	if ($event == 'article' and $step == 'create')
+	{
+		echo $js;
+	}
+	return;
 }
 # --- END PLUGIN CODE ---
 if (0) {
@@ -64,8 +87,9 @@ if (0) {
 h1. yab_remember_categories
 
 p. Remembers the selected categories in write tab.
+Does only work while creating articles not on editing existing articles.
 
-p. *Version:* 0.1
+p. *Version:* 0.2
 
 h2. Table of contents
 
@@ -83,13 +107,15 @@ p. yab_remember_categories's  minimum requirements:
 
 h2(#help-config03). Configuration
 
-Install and activate the plugin. The Plugin remembers the selected category 1 and category 2 in write tab by saving with HTML5 localStorage.
+Install and activate the plugin. The Plugin remembers the selected category 1 and category 2 in write tab while creating an article by saving with HTML5 localStorage.
 
 
 h2(#help-section10). Changelog
 
 * v0.1: 2014-02-04
 ** initial release
+* v0.2: 2014-02-06
+** bugfix: does now only work on while in article create step
 
 h2(#help-section11). Licence
 

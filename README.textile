@@ -1,8 +1,10 @@
 h1. yab_remember_categories
 
 p. Remembers the selected categories in write tab.
+Does only work while creating articles not on editing existing articles.
 
-p. *Version:* 0.1
+
+p. *Version:* 0.2
 
 h2. Table of contents
 
@@ -27,6 +29,9 @@ h2(#help-section10). Changelog
 
 * v0.1: 2014-02-04
 ** initial release
+* v0.2: 2014-02-06
+** bugfix: does now only work on while in article create step
+
 
 h2(#help-section11). Licence
 
